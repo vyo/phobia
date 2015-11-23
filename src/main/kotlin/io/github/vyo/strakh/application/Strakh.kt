@@ -14,20 +14,12 @@ import io.github.vyo.strakh.model.game.World
  */
 
 class Strakh : DefaultBWListener() {
-
-    //    val mirror: Mirror = Mirror()
-    //    lateinit var game: Game
-    //    lateinit var self: Player
-
     init {
         World.meta.mirror = Mirror()
     }
 
     override fun onStart() {
-        //        game = mirror.game
-        //        self = game.self()
 
-        //        World.meta.mirror = Mirror()
         World.meta.game = World.meta.mirror.game
         World.players.self = World.meta.game.self()
 
@@ -53,46 +45,27 @@ class Strakh : DefaultBWListener() {
     }
 
     override fun onFrame() {
+        World.update()
         //game.setTextSize(10);
         World.meta.game.drawTextScreen(10, 10, "Playing as " + World.players.self.name + " - " + World.players.self
                 .race)
 
         val units = StringBuilder("My units:\n")
 
-        //update my units
-        World.units.own = World.players.self.units
-
-        for (unit in World.units.own) println(unit)
         //iterate through my units
         for (myUnit in World.units.own) {
-            var plan = Planner.formulatePlan(Worker(myUnit))
-
             units.append(myUnit.type).append(" ").append(myUnit.tilePosition).append("\n")
+
+            var plan = Planner.formulatePlan(Worker(myUnit))
+            val (dummyPlan, cost, steps) = Planner.returnPlan()
+            //if it's a drone and it's idle, send it to the closest mineral patch
+            if (myUnit.type.isWorker && myUnit.isIdle) {
+                Executor.executePlan(plan)
+            }
 
             //if there's enough minerals, train an SCV
             if (myUnit.type === UnitType.Terran_Command_Center && World.players.self.minerals() >= 50) {
                 myUnit.train(UnitType.Terran_SCV)
-            }
-
-            //if it's a drone and it's idle, send it to the closest mineral patch
-            if (myUnit.type.isWorker && myUnit.isIdle) {
-
-                Executor.executePlan(plan)
-                //                var closestMineral: bwapi.Unit? = null
-                //
-                //                //find the closest mineral
-                //                for (neutralUnit in game.neutral().units) {
-                //                    if (neutralUnit.type.isMineralField) {
-                //                        if (closestMineral == null || myUnit.getDistance(neutralUnit) < myUnit.getDistance(closestMineral)) {
-                //                            closestMineral = neutralUnit
-                //                        }
-                //                    }
-                //                }
-                //
-                //                //if a mineral patch was found, send the drone to gather it
-                //                if (closestMineral != null) {
-                //                    myUnit.gather(closestMineral, false)
-                //                }
             }
         }
 

@@ -1,30 +1,35 @@
 package io.github.vyo.strakh.model.action
 
 import io.github.vyo.strakh.goap.client.Action
+import io.github.vyo.strakh.goap.client.NotExecutableException
 import io.github.vyo.strakh.model.agent.Worker
-import io.github.vyo.strakh.model.game.World
+import io.github.vyo.strakh.model.game.Resources
 
 /**
  * Created by Manuel Weidmann on 22.11.2015.
  */
 
-class MineMinerals(worker: Worker) : Action(worker) {
+class MineMinerals(agent: Worker) : Action(agent) {
     init {
         actions = 1
     }
 
-    var worker = worker
-
     override fun applicable(): Boolean {
-        return World.freeMineralPatchNearby(worker.unit)
+        val (patch, nearby, saturated) = Resources.nearestMineralPatch((agent as Worker).unit)
+        println("Resource spot: $patch, $nearby, $saturated")
+
+        return patch != null && nearby && !saturated
     }
 
     override fun apply() {
-        worker.isMiningMinerals = true
+        (agent as Worker).isMiningMinerals = true
     }
 
     override fun execute() {
-        worker.unit.gather(World.nearestFreeMineralPatch(worker.unit))
+        val (mineralPatch, nearby, saturated) = Resources.nearestMineralPatch((agent as Worker).unit)
+        if (mineralPatch != null && nearby && !saturated) {
+            agent.unit.gather(mineralPatch)
+        } else throw NotExecutableException()
     }
 
     override fun toString(): String {

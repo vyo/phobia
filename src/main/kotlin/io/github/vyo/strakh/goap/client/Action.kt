@@ -12,6 +12,7 @@ abstract class Action(agent: Agent) : Comparable<Action> {
     var time: Int = 0
     var actions: Int = 0
 
+    open val agent: Agent = agent
     abstract fun applicable(): Boolean
     abstract fun apply()
     abstract fun execute()
