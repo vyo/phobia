@@ -1,6 +1,6 @@
 package io.github.vyo.strakh.model.goal
 
-import io.github.vyo.strakh.goap.client.Goal
+import io.github.vyo.strakh.goap.components.Goal
 import io.github.vyo.strakh.model.agent.Worker
 
 /**

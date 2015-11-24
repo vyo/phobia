@@ -1,7 +1,7 @@
 package io.github.vyo.strakh.model.agent
 
-import io.github.vyo.strakh.goap.client.Action
-import io.github.vyo.strakh.goap.client.Goal
+import io.github.vyo.strakh.goap.components.Action
+import io.github.vyo.strakh.goap.components.Goal
 import io.github.vyo.strakh.model.action.*
 import io.github.vyo.strakh.model.goal.MiningGas
 import io.github.vyo.strakh.model.goal.MiningMinerals

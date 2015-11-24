@@ -1,4 +1,4 @@
-package io.github.vyo.strakh.goap.client
+package io.github.vyo.strakh.goap.components
 
 /**
  * Created by Manuel Weidmann on 21.11.2015.

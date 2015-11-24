@@ -1,6 +1,6 @@
 package io.github.vyo.strakh.model.action
 
-import io.github.vyo.strakh.goap.client.Action
+import io.github.vyo.strakh.goap.components.Action
 import io.github.vyo.strakh.model.agent.Worker
 import io.github.vyo.strakh.model.game.Resources
 

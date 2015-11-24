@@ -12,6 +12,7 @@ object World : State() {
     object meta {
         lateinit var mirror: Mirror
         lateinit var game: Game
+        var mapAnalysed: Boolean = false
     }
 
 

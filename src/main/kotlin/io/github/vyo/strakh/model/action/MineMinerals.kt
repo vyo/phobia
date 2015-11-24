@@ -1,7 +1,8 @@
 package io.github.vyo.strakh.model.action
 
-import io.github.vyo.strakh.goap.client.Action
-import io.github.vyo.strakh.goap.client.NotExecutableException
+import io.github.vyo.strakh.goap.components.Action
+import io.github.vyo.strakh.goap.components.NotExecutableException
+import io.github.vyo.strakh.log.Logger
 import io.github.vyo.strakh.model.agent.Worker
 import io.github.vyo.strakh.model.game.Resources
 
@@ -14,9 +15,11 @@ class MineMinerals(agent: Worker) : Action(agent) {
         actions = 1
     }
 
+    val logger: Logger = Logger(this)
+
     override fun applicable(): Boolean {
         val (patch, nearby, saturated) = Resources.nearestMineralPatch((agent as Worker).unit)
-        println("Resource spot: $patch, $nearby, $saturated")
+        logger.debug("Resource spot: $patch, $nearby, $saturated")
 
         return patch != null && nearby && !saturated
     }

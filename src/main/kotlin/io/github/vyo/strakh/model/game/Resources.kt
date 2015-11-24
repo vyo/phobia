@@ -27,8 +27,6 @@ object Resources : State() {
         val nearby = true
         val saturated = false
         return ResourceSpot(closestPatch, nearby, saturated)
-        //        if (closestMineral is Unit) return closestMineral
-        //        else throw UnsupportedOperationException()
     }
 
     fun nearestGeyser(worker: bwapi.Unit): ResourceSpot {
@@ -43,7 +41,6 @@ object Resources : State() {
         val nearby = true
         val saturated = true
         return ResourceSpot(closestGeyser, nearby, saturated)
-        //        return false
     }
 
     fun nearestRefinery(worker: Unit): ResourceSpot {
@@ -58,7 +55,6 @@ object Resources : State() {
         val nearby = true
         val saturated = true
         return ResourceSpot(closestRefinery, nearby, saturated)
-        //        return false
     }
 
     override fun update() {
