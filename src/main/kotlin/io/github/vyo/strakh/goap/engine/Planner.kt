@@ -2,7 +2,7 @@ package io.github.vyo.strakh.goap.engine
 
 import io.github.vyo.strakh.goap.component.Action
 import io.github.vyo.strakh.goap.component.Agent
-import io.github.vyo.twig.Logger
+import io.github.vyo.twig.logger.Logger
 
 /**
  * Created by Manuel Weidmann on 21.11.2015.

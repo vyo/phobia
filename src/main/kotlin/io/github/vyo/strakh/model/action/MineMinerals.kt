@@ -5,7 +5,7 @@ import io.github.vyo.strakh.goap.component.Cost
 import io.github.vyo.strakh.goap.component.NotExecutableException
 import io.github.vyo.strakh.model.agent.Unit
 import io.github.vyo.strakh.model.game.Resources
-import io.github.vyo.twig.Logger
+import io.github.vyo.twig.logger.Logger
 
 /**
  * Created by Manuel Weidmann on 22.11.2015.

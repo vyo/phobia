@@ -9,8 +9,8 @@ import io.github.vyo.strakh.model.agent.Worker
 import io.github.vyo.strakh.model.game.Players
 import io.github.vyo.strakh.model.game.Units
 import io.github.vyo.strakh.model.game.World
-import io.github.vyo.twig.Level
-import io.github.vyo.twig.Logger
+import io.github.vyo.twig.logger.Level
+import io.github.vyo.twig.logger.Logger
 import nl.komponents.kovenant.async
 
 /**
@@ -31,7 +31,7 @@ object Strakh : BWEventListener {
         Players.self = World.meta.game.self()
 
         Planner.logger.threshold = Level.DEBUG
-        gameInfoLogger.threshold = Level.DEBUG
+        gameInfoLogger.threshold = Level.INFO
 
         gameInfoLogger.info("Bot $this")
         gameInfoLogger.info("BWAPI revision ${World.meta.game.revision} ")
@@ -102,65 +102,65 @@ object Strakh : BWEventListener {
     }
 
     override fun onUnitHide(unit: Unit?) {
-        gameInfoLogger.trace("event callback for onUnitHide not implemented")
+        gameInfoLogger.debug("event callback for onUnitHide not implemented")
     }
 
     override fun onUnitComplete(unit: Unit?) {
-        gameInfoLogger.trace("event callback for onUnitComplete not implemented")
+        gameInfoLogger.debug("event callback for onUnitComplete not implemented")
     }
 
     override fun onSendText(text: String) {
-        gameInfoLogger.trace("event callback for onSendText not implemented")
+        gameInfoLogger.debug("event callback for onSendText not implemented")
     }
 
     override fun onNukeDetect(target: Position?) {
-        gameInfoLogger.trace("event callback for onNukeDetect not " +
+        gameInfoLogger.debug("event callback for onNukeDetect not " +
                 "implemented")
     }
 
     override fun onPlayerDropped(player: Player?) {
-        gameInfoLogger.trace("event callback for onPlayerDropped not implemented")
+        gameInfoLogger.debug("event callback for onPlayerDropped not implemented")
     }
 
     override fun onUnitEvade(unit: Unit?) {
-        gameInfoLogger.trace("event callback for onUnitEvade not implemented")
+        gameInfoLogger.debug("event callback for onUnitEvade not implemented")
 
     }
 
     override fun onEnd(end: Boolean) {
-        gameInfoLogger.trace("event callback for onEnd not implemented")
+        gameInfoLogger.debug("event callback for onEnd not implemented")
     }
 
     override fun onUnitMorph(unit: Unit?) {
-        gameInfoLogger.trace("event callback for onUnitMorph not implemented")
+        gameInfoLogger.debug("event callback for onUnitMorph not implemented")
     }
 
     override fun onUnitRenegade(unit: Unit?) {
-        gameInfoLogger.trace("event callback for onUnitRenegade not implemented")
+        gameInfoLogger.debug("event callback for onUnitRenegade not implemented")
     }
 
     override fun onUnitDiscover(unit: Unit?) {
-        gameInfoLogger.trace("event callback for onUnitDiscover not implemented")
+        gameInfoLogger.debug("event callback for onUnitDiscover not implemented")
     }
 
     override fun onPlayerLeft(player: Player?) {
-        gameInfoLogger.trace("event callback for onPlayerLeft not implemented")
+        gameInfoLogger.debug("event callback for onPlayerLeft not implemented")
     }
 
     override fun onReceiveText(receiver: Player?, text: String?) {
-        gameInfoLogger.trace("event callback for onReceiveText not implemented")
+        gameInfoLogger.debug("event callback for onReceiveText not implemented")
     }
 
     override fun onUnitShow(unit: Unit?) {
-        gameInfoLogger.trace("event callback for onUnitShow not implemented")
+        gameInfoLogger.debug("event callback for onUnitShow not implemented")
     }
 
     override fun onSaveGame(save: String?) {
-        gameInfoLogger.trace("event callback for onSaveGame not implemented")
+        gameInfoLogger.debug("event callback for onSaveGame not implemented")
     }
 
     override fun onUnitDestroy(unit: Unit?) {
-        gameInfoLogger.trace("event callback for onUnitDestroy not implemented")
+        gameInfoLogger.debug("event callback for onUnitDestroy not implemented")
     }
 
     fun start() {
@@ -168,14 +168,14 @@ object Strakh : BWEventListener {
         World.meta.mirror.startGame()
     }
 
-    private fun frameInfo(level: Level = Level.TRACE) {
-        frameInfoLogger.log("frame count    ${World.meta.game.frameCount}", level)
-        frameInfoLogger.log("apm total      ${World.meta.game.getAPM(false)}", level)
-        frameInfoLogger.log("apm net        ${World.meta.game.getAPM(true)}", level)
-        frameInfoLogger.log("fps current    ${World.meta.game.fps}", level)
-        frameInfoLogger.log("fps average    ${World.meta.game.averageFPS}", level)
-        frameInfoLogger.log("latency        ${World.meta.game.latency}", level)
-        frameInfoLogger.log("latency frames ${World.meta.game.latencyFrames}", level)
-        frameInfoLogger.log("latency time   ${World.meta.game.latencyTime}", level)
+    private fun frameInfo() {
+        frameInfoLogger.trace("frame count    ${World.meta.game.frameCount}")
+        frameInfoLogger.trace("apm total      ${World.meta.game.getAPM(false)}")
+        frameInfoLogger.trace("apm net        ${World.meta.game.getAPM(true)}")
+        frameInfoLogger.trace("fps current    ${World.meta.game.fps}")
+        frameInfoLogger.trace("fps average    ${World.meta.game.averageFPS}")
+        frameInfoLogger.trace("latency        ${World.meta.game.latency}")
+        frameInfoLogger.trace("latency frames ${World.meta.game.latencyFrames}")
+        frameInfoLogger.trace("latency time   ${World.meta.game.latencyTime}")
     }
 }
