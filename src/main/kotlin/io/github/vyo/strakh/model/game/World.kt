@@ -16,13 +16,9 @@ object World : State() {
     }
 
 
-    val players: Players = Players
-    val units: Units = Units
-    val resources: Resources = Resources
-
     override fun update() {
-        units.update()
-        resources.update()
+        Units.update()
+        Resources.update()
     }
 
 

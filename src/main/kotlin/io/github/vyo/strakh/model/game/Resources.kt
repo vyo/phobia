@@ -17,7 +17,7 @@ object Resources : State() {
 
     fun nearestMineralPatch(worker: Unit): ResourceSpot {
         //find the closest mineral
-        var closestPatch: bwapi.Unit? = null
+        var closestPatch: Unit? = null
         for (mineralPatch in minerals) {
             if (closestPatch == null || worker.getDistance(mineralPatch) < worker.getDistance(closestPatch)) {
                 closestPatch = mineralPatch
@@ -29,9 +29,9 @@ object Resources : State() {
         return ResourceSpot(closestPatch, nearby, saturated)
     }
 
-    fun nearestGeyser(worker: bwapi.Unit): ResourceSpot {
+    fun nearestGeyser(worker: Unit): ResourceSpot {
         //find the closest geyser
-        var closestGeyser: bwapi.Unit? = null
+        var closestGeyser: Unit? = null
         for (geyser in geysers) {
             if (closestGeyser == null || worker.getDistance(geyser) < worker.getDistance(closestGeyser)) {
                 closestGeyser = geyser
@@ -45,7 +45,7 @@ object Resources : State() {
 
     fun nearestRefinery(worker: Unit): ResourceSpot {
         //find the closest refinery
-        var closestRefinery: bwapi.Unit? = null
+        var closestRefinery: Unit? = null
         for (refinery in refineries) {
             if (closestRefinery == null || worker.getDistance(refinery) < worker.getDistance(closestRefinery)) {
                 closestRefinery = refinery
@@ -61,7 +61,7 @@ object Resources : State() {
         //TODO: update re-actively instead of looping each frame
         //update mineral patches
         minerals.clear()
-        for (patch in World.units.neutral) {
+        for (patch in Units.neutral) {
             if (patch.type == UnitType.Resource_Mineral_Field
                     || patch.type == UnitType.Resource_Mineral_Field_Type_2
                     || patch.type == UnitType.Resource_Mineral_Field_Type_3) {
@@ -70,14 +70,14 @@ object Resources : State() {
         }
         //update vespene geysers
         geysers.clear()
-        for (geyser in World.units.neutral) {
+        for (geyser in Units.neutral) {
             if (geyser.type == UnitType.Resource_Vespene_Geyser) {
                 geysers.add(geyser)
             }
         }
         //update refineries
         refineries.clear()
-        for (refinery in World.units.own) {
+        for (refinery in Units.own) {
             if (refinery.type.isRefinery) {
                 refineries.add(refinery)
             }
