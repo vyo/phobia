@@ -1,7 +1,7 @@
 package io.github.vyo.strakh.model.agent
 
-import io.github.vyo.strakh.goap.components.Action
-import io.github.vyo.strakh.goap.components.Goal
+import io.github.vyo.strakh.goap.component.Action
+import io.github.vyo.strakh.goap.component.Goal
 import io.github.vyo.strakh.model.action.*
 import io.github.vyo.strakh.model.goal.MiningGas
 import io.github.vyo.strakh.model.goal.MiningMinerals
@@ -13,11 +13,8 @@ import io.github.vyo.strakh.model.goal.MiningMinerals
 class Worker(unit: bwapi.Unit) : Unit(unit) {
 
     override var actions: MutableList<Action> = arrayListOf(Attack(this), Build(this), Move(this), Repair(this), MineGas
-    (this),
-            MineMinerals(this))
+    (this), MineMinerals(this))
     override var goals: MutableList<Goal> = arrayListOf(MiningGas(this), MiningMinerals(this))
 
-    var isMiningGas = false
-    var isMiningMinerals = false
 
 }

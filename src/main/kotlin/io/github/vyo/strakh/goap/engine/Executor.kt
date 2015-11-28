@@ -1,6 +1,6 @@
 package io.github.vyo.strakh.goap.engine
 
-import io.github.vyo.strakh.goap.components.Action
+import io.github.vyo.strakh.goap.component.Action
 
 /**
  * Created by Manuel Weidmann on 21.11.2015.

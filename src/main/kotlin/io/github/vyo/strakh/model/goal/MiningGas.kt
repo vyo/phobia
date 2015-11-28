@@ -1,21 +1,18 @@
 package io.github.vyo.strakh.model.goal
 
-import io.github.vyo.strakh.goap.components.Goal
-import io.github.vyo.strakh.model.agent.Worker
+import io.github.vyo.strakh.goap.component.Goal
+import io.github.vyo.strakh.model.agent.Unit
 
 /**
  * Created by Manuel Weidmann on 22.11.2015.
  */
 
-class MiningGas(worker: Worker) : Goal(worker) {
-    init {
-        value = 15
-    }
+class MiningGas(val unit: Unit) : Goal {
 
-    val worker = worker
+    override var value: Int = 15
 
     override fun reached(): Boolean {
-        return worker.isMiningGas
+        return unit.isGatheringGas
     }
 
 

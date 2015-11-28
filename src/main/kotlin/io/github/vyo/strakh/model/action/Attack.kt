@@ -1,16 +1,19 @@
 package io.github.vyo.strakh.model.action
 
-import io.github.vyo.strakh.goap.components.Action
-import io.github.vyo.strakh.goap.components.Agent
-
+import io.github.vyo.strakh.goap.component.Action
+import io.github.vyo.strakh.model.agent.Unit
 /**
  * Created by Manuel Weidmann on 22.11.2015.
  */
 
-class Attack(unit: Agent) : Action(unit) {
-    init {
-        actions = 1
-    }
+class Attack(val unit: Unit) : Action {
+
+    override var minerals: Int = 0
+    override var gas: Int = 0
+    override var supply: Int = 0
+    override var larvae: Int = 0
+    override var time: Int = 0
+    override var actions: Int = 1
 
     override fun applicable(): Boolean {
         return false
