@@ -26,6 +26,7 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile 'nl.komponents.kovenant:kovenant:2.9.+'
     compile files("lib/bwmirror_v2_4.jar")
+    compile files("lib/twig-0.5.2.jar")
 }
 sourceSets {
     main.java.srcDirs += 'src/main/kotlin'
