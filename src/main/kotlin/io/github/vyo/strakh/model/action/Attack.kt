@@ -1,6 +1,7 @@
 package io.github.vyo.strakh.model.action
 
 import io.github.vyo.strakh.goap.component.Action
+import io.github.vyo.strakh.goap.component.Cost
 import io.github.vyo.strakh.model.agent.Unit
 /**
  * Created by Manuel Weidmann on 22.11.2015.
@@ -8,12 +9,8 @@ import io.github.vyo.strakh.model.agent.Unit
 
 class Attack(val unit: Unit) : Action {
 
-    override var minerals: Int = 0
-    override var gas: Int = 0
-    override var supply: Int = 0
-    override var larvae: Int = 0
-    override var time: Int = 0
-    override var actions: Int = 1
+
+    override var cost: Cost = Cost(actions = 1)
 
     override fun applicable(): Boolean {
         return false

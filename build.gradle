@@ -24,6 +24,9 @@ mainClassName = 'io.github.vyo.strakh.application.MainKt'
 applicationDefaultJvmArgs = ['-D32']
 
 repositories {
+    mavenCentral()
+}
+repositories {
     maven {
         url "http://repository.jetbrains.com/all"
     }

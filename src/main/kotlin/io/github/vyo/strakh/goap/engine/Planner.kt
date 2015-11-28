@@ -48,12 +48,6 @@ object Planner {
         return plan
     }
 
-    data class Plan(val actions: Array<Action>, val cost: Int, val steps: Int)
-
-    fun returnPlan(): Plan {
-        return Plan(arrayOf(), 0, 0)
-    }
-
     override fun toString(): String {
         return "planner"
     }
