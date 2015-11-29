@@ -37,7 +37,7 @@ dependencies {
     compile 'nl.komponents.kovenant:kovenant:2.9.+'
     compile 'nl.komponents.kovenant:kovenant-disruptor:2.9.+'
     compile files("lib/bwmirror_v2_4.jar")
-    compile files("lib/twig-0.7.0.jar")
+    compile files("lib/twig-0.10.0.jar")
 
     testCompile "org.jetbrains.spek:spek:$spek_version"
 }
