@@ -1,5 +1,6 @@
 package io.github.vyo.strakh.model.goal
 
+import io.github.vyo.strakh.goap.component.Agent
 import io.github.vyo.strakh.goap.component.Goal
 import io.github.vyo.strakh.model.agent.Unit
 
@@ -9,6 +10,7 @@ import io.github.vyo.strakh.model.agent.Unit
 
 class MiningMinerals(val unit: Unit) : Goal {
 
+    override var agent: Agent = unit
     override var value: Int = 10
 
     override fun reached(): Boolean {

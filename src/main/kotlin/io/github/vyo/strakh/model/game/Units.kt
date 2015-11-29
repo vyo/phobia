@@ -14,7 +14,9 @@ object Units : State() {
     override fun update() {
         //update player units
         own = Players.self.units
+        //update enemy units
+
         //update neutral units
-        neutral = World.meta.game.neutralUnits
+        neutral = Meta.game.neutralUnits
     }
 }

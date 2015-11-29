@@ -8,6 +8,7 @@ import bwapi.Player
 
 object Players : State() {
     lateinit var self: Player
+    lateinit var enemies: MutableList<Player>
 
     override fun update() {
     }

@@ -1,6 +1,7 @@
 package io.github.vyo.strakh.model.action
 
 import io.github.vyo.strakh.goap.component.Action
+import io.github.vyo.strakh.goap.component.Agent
 import io.github.vyo.strakh.goap.component.Cost
 import io.github.vyo.strakh.model.agent.Unit
 import io.github.vyo.strakh.model.game.Resources
@@ -11,6 +12,7 @@ import io.github.vyo.strakh.model.game.Resources
 
 class MineGas(val unit: Unit) : Action {
 
+    override var agent: Agent = unit
     override var cost: Cost = Cost(actions = 1)
 
     override fun applicable(): Boolean {
@@ -22,6 +24,10 @@ class MineGas(val unit: Unit) : Action {
 
     override fun apply() {
         unit.isGatheringGas = true
+    }
+
+    override fun executable(): Boolean {
+        return applicable()
     }
 
     override fun execute() {

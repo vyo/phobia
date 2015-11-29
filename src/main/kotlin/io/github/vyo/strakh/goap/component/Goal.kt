@@ -6,6 +6,7 @@ package io.github.vyo.strakh.goap.component
 
 interface Goal : Comparable<Goal> {
 
+    var agent: Agent
     var value: Int
 
     fun reached(): Boolean

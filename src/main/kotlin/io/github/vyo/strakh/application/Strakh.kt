@@ -6,12 +6,14 @@ import bwta.BWTA
 import io.github.vyo.strakh.goap.engine.Executor
 import io.github.vyo.strakh.goap.engine.Planner
 import io.github.vyo.strakh.model.agent.Worker
+import io.github.vyo.strakh.model.game.Meta
 import io.github.vyo.strakh.model.game.Players
 import io.github.vyo.strakh.model.game.Units
 import io.github.vyo.strakh.model.game.World
 import io.github.vyo.twig.logger.Level
 import io.github.vyo.twig.logger.Logger
 import nl.komponents.kovenant.async
+import nl.komponents.kovenant.then
 
 /**
  * Created by Manuel Weidmann on 21.11.2015.
@@ -23,38 +25,46 @@ object Strakh : BWEventListener {
     val frameInfoLogger: Logger = Logger("frame")
 
     init {
-        World.meta.mirror = Mirror()
+        Meta.mirror = Mirror()
     }
 
     override fun onStart() {
-        World.meta.game = World.meta.mirror.game
-        Players.self = World.meta.game.self()
+        Meta.game = Meta.mirror.game
+        Players.self = Meta.game.self()
+        Players.enemies = Meta.game.enemies()
+
+        async {
+            Meta.game.enemies()
+        } then {
+            logger.info(it.toString())
+        }
 
         Planner.logger.threshold = Level.DEBUG
+        Executor.logger.threshold = Level.TRACE
         gameInfoLogger.threshold = Level.INFO
 
         gameInfoLogger.info("Bot $this")
-        gameInfoLogger.info("BWAPI revision ${World.meta.game.revision} ")
-        if (World.meta.game.isDebug) gameInfoLogger.info("Debug mode")
-        if (World.meta.game.isMultiplayer) {
+        gameInfoLogger.info("BWAPI revision ${Meta.game.revision}")
+        if (Meta.game.isDebug) gameInfoLogger.info("Debug mode")
+        if (Meta.game.isMultiplayer) {
             gameInfoLogger.info("Multiplayer")
         } else {
             gameInfoLogger.info("Singleplayer")
         }
-        if (World.meta.game.isBattleNet) gameInfoLogger.info("Battle.net")
-        gameInfoLogger.info("Map ${World.meta.game.mapName()} (${World.meta.game.mapPathName()})")
-        if (World.meta.game.isReplay) gameInfoLogger.info("Replay")
+        if (Meta.game.isBattleNet) gameInfoLogger.info("Battle.net")
+        gameInfoLogger.info("Map ${Meta.game.mapName()} (${Meta.game.mapPathName()})")
+        if (Meta.game.isReplay) gameInfoLogger.info("Replay")
 
         async {
-            logger.info("Setting up BWTA map data")
+            gameInfoLogger.info("Setting up BWTA map data")
             BWTA.readMap()
             BWTA.analyze()
         } success {
-            logger.info("Map data ready")
-            World.meta.mapAnalysed = true
+            gameInfoLogger.info("Map data ready")
+            Meta.mapAnalysed = true
         } fail {
-            logger.warn("Map data not ready")
-            World.meta.mapAnalysed = false
+            gameInfoLogger.warn("Map data not ready")
+            Meta.mapAnalysed = false
         }
 
 
@@ -68,7 +78,7 @@ object Strakh : BWEventListener {
     }
 
     override fun onUnitCreate(unit: bwapi.Unit) {
-        logger.debug("New unit " + unit.type)
+        gameInfoLogger.debug("New unit " + unit.type)
     }
 
     override fun onFrame() {
@@ -76,19 +86,35 @@ object Strakh : BWEventListener {
 
         World.update()
         //game.setTextSize(10);
-        World.meta.game.drawTextScreen(10, 10, "Playing as " + Players.self.name + " - " + Players.self
-                .race)
+        //        Game.game.drawTextScreen(10, 10, "Playing as " + Players.self.name + " - " + Players.self
+        //                .race)
 
-        val units = StringBuilder("My units:\n")
+        //        val units = StringBuilder("My units:\n")
 
         //iterate through my units
         for (myUnit in Units.own) {
-            units.append(myUnit.type).append(" ").append(myUnit.tilePosition).append("\n")
+            //            units.append(myUnit.type).append(" ").append(myUnit.tilePosition).append("\n")
 
             //if it's a drone and it's idle, send it to the closest mineral patch
             if (myUnit.type.isWorker && myUnit.isIdle) {
-                var plan = Planner.formulatePlan(Worker(myUnit))
-                Executor.executePlan(plan)
+
+
+                Executor.executePlan(
+                        async {
+                            Planner.formulatePlan(Worker(myUnit))
+                        }.get()
+                )
+
+                //                async {
+                //                    Planner.formulatePlan(Worker(myUnit))
+                //                } then {
+                //                    Executor.executePlan(it)
+                //                }
+
+                //                async {
+                //                    val plan = Planner.formulatePlan(Worker(myUnit))
+                //                    Executor.executePlan(plan)
+                //                }
             }
 
             //if there's enough minerals, train an SCV
@@ -98,7 +124,7 @@ object Strakh : BWEventListener {
         }
 
         //draw my units on screen
-        World.meta.game.drawTextScreen(10, 25, units.toString())
+        //        Game.game.drawTextScreen(10, 25, units.toString())
     }
 
     override fun onUnitHide(unit: Unit?) {
@@ -164,18 +190,18 @@ object Strakh : BWEventListener {
     }
 
     fun start() {
-        World.meta.mirror.module.setEventListener(this)
-        World.meta.mirror.startGame()
+        Meta.mirror.module.setEventListener(this)
+        Meta.mirror.startGame()
     }
 
     private fun frameInfo() {
-        frameInfoLogger.trace("frame count    ${World.meta.game.frameCount}")
-        frameInfoLogger.trace("apm total      ${World.meta.game.getAPM(false)}")
-        frameInfoLogger.trace("apm net        ${World.meta.game.getAPM(true)}")
-        frameInfoLogger.trace("fps current    ${World.meta.game.fps}")
-        frameInfoLogger.trace("fps average    ${World.meta.game.averageFPS}")
-        frameInfoLogger.trace("latency        ${World.meta.game.latency}")
-        frameInfoLogger.trace("latency frames ${World.meta.game.latencyFrames}")
-        frameInfoLogger.trace("latency time   ${World.meta.game.latencyTime}")
+        frameInfoLogger.trace("frame count    ${Meta.game.frameCount}")
+        frameInfoLogger.trace("apm total      ${Meta.game.getAPM(false)}")
+        frameInfoLogger.trace("apm net        ${Meta.game.getAPM(true)}")
+        frameInfoLogger.trace("fps current    ${Meta.game.fps}")
+        frameInfoLogger.trace("fps average    ${Meta.game.averageFPS}")
+        frameInfoLogger.trace("latency        ${Meta.game.latency}")
+        frameInfoLogger.trace("latency frames ${Meta.game.latencyFrames}")
+        frameInfoLogger.trace("latency time   ${Meta.game.latencyTime}")
     }
 }

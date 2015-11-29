@@ -6,10 +6,12 @@ package io.github.vyo.strakh.goap.component
 
 interface Action : Comparable<Action> {
 
+    var agent: Agent
     var cost: Cost
 
     fun applicable(): Boolean
     fun apply()
+    fun executable(): Boolean
     fun execute()
 
     override fun compareTo(other: Action): Int {

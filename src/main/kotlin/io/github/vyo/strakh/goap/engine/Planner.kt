@@ -11,7 +11,7 @@ import io.github.vyo.twig.logger.Logger
 object Planner {
 
     val logger: Logger = Logger(this)
-    
+
     fun formulatePlan(agent: Agent): List<Action> {
         val goals = agent.goals
         goals.sort()
@@ -19,9 +19,9 @@ object Planner {
 
         val plan: MutableList<Action> = arrayListOf()
 
-        logger.debug("Formulating plan for: $agent")
-        logger.debug("with goals: $goals")
-        logger.debug("and actions: $actions")
+        logger.debug("Formulating plan", Pair("agent", agent))
+        logger.debug("with goals: $goals", Pair("agent", agent))
+        logger.debug("and actions: $actions", Pair("agent", agent))
 
         for (goal in goals) {
             var available: MutableList<Action> = actions
@@ -30,15 +30,15 @@ object Planner {
             val iterator: Iterator<Action> = available.iterator()
             while (iterator.hasNext()) {
                 var action = iterator.next()
-                logger.debug("Next action to check: $action")
+                logger.trace("Next action to check: $action", Pair("agent", agent))
                 if (action.applicable()) {
-                    logger.debug("Applying action")
+                    logger.trace("Applying action", Pair("agent", agent))
                     action.apply()
                     plan.add(action)
                 }
                 if (goal.reached()) {
-                    logger.debug("Plan found for: $goal")
-                    logger.debug("The plan is: $plan")
+                    logger.debug("Plan found for: $goal", Pair("agent", agent))
+                    logger.debug("The plan is: $plan", Pair("agent", agent))
                     return plan
                 }
             }

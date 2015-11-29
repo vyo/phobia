@@ -1,8 +1,9 @@
 package io.github.vyo.strakh.model.action
 
 import io.github.vyo.strakh.goap.component.Action
+import io.github.vyo.strakh.goap.component.Agent
 import io.github.vyo.strakh.goap.component.Cost
-import io.github.vyo.strakh.goap.component.NotExecutableException
+import io.github.vyo.strakh.goap.component.NotExecutedException
 import io.github.vyo.strakh.model.agent.Unit
 import io.github.vyo.strakh.model.game.Resources
 import io.github.vyo.twig.logger.Logger
@@ -13,6 +14,7 @@ import io.github.vyo.twig.logger.Logger
 
 class MineMinerals(val unit: Unit) : Action {
 
+    override var agent: Agent = unit
     override var cost: Cost = Cost(actions = 1)
 
     val logger: Logger = Logger(this)
@@ -28,14 +30,17 @@ class MineMinerals(val unit: Unit) : Action {
         unit.isGatheringMinerals = true
     }
 
+    override fun executable(): Boolean {
+        return applicable()
+    }
+
     override fun execute() {
-        val (mineralPatch, nearby, saturated) = Resources.nearestMineralPatch(unit.unit)
-        if (mineralPatch != null && nearby && !saturated) {
-            unit.unit.gather(mineralPatch)
-        } else throw NotExecutableException()
+        val (mineralPatch) = Resources.nearestMineralPatch(unit.unit)
+        if (mineralPatch == null) throw NotExecutedException("mineral patch missing")
+        if (!unit.unit.gather(mineralPatch)) throw NotExecutedException("command \'gather\' failed")
     }
 
     override fun toString(): String {
-        return " MineMinerals"
+        return "MineMinerals"
     }
 }
