@@ -26,6 +26,7 @@ object Strakh : BWEventListener {
 
     init {
         Meta.mirror = Mirror()
+        frameInfoLogger.level = Level.INFO
     }
 
     override fun onStart() {
@@ -39,9 +40,9 @@ object Strakh : BWEventListener {
             logger.info(it.toString())
         }
 
-        Planner.logger.threshold = Level.DEBUG
-        Executor.logger.threshold = Level.TRACE
-        gameInfoLogger.threshold = Level.INFO
+        //        Planner.logger.level = Level.DEBUG
+        //        Executor.logger.level = Level.TRACE
+        //        gameInfoLogger.level = Level.INFO
 
         gameInfoLogger.info("Bot $this")
         gameInfoLogger.info("BWAPI revision ${Meta.game.revision}")
@@ -98,12 +99,9 @@ object Strakh : BWEventListener {
             //if it's a drone and it's idle, send it to the closest mineral patch
             if (myUnit.type.isWorker && myUnit.isIdle) {
 
-
-                Executor.executePlan(
-                        async {
-                            Planner.formulatePlan(Worker(myUnit))
-                        }.get()
-                )
+                async {
+                    Planner.formulatePlan(Worker(myUnit))
+                }.get()
 
                 //                async {
                 //                    Planner.formulatePlan(Worker(myUnit))
@@ -125,6 +123,8 @@ object Strakh : BWEventListener {
 
         //draw my units on screen
         //        Game.game.drawTextScreen(10, 25, units.toString())
+
+        Executor.processQueue()
     }
 
     override fun onUnitHide(unit: Unit?) {

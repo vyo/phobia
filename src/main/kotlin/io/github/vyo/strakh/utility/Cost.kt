@@ -1,7 +1,10 @@
-package io.github.vyo.strakh.goap.component
+package io.github.vyo.strakh.utility
 
 /**
  * Created by Manuel Weidmann on 28.11.2015.
+ *
+ * [larvae] cost works like [supply] in that internal values are double the amount shown
+ * in-game
  */
 data class Cost(var health: Int = 0,
                 var shield: Int = 0,
@@ -10,8 +13,8 @@ data class Cost(var health: Int = 0,
                 var gas: Int = 0,
                 var supply: Int = 0,
                 var larvae: Int = 0,
-                var time: Int = 0,
-                var actions: Int = 0) : Comparable<Cost> {
+                var time: Int,
+                var actions: Int) : Comparable<Cost> {
 
     override fun compareTo(other: Cost): Int {
         return time.compareTo(other.time)

@@ -1,11 +1,11 @@
-package io.github.vyo.strakh.model.action
+package io.github.vyo.strakh.model.action.unit.worker
 
 import io.github.vyo.strakh.goap.component.Action
 import io.github.vyo.strakh.goap.component.Agent
-import io.github.vyo.strakh.goap.component.Cost
 import io.github.vyo.strakh.goap.component.NotExecutedException
 import io.github.vyo.strakh.model.agent.Unit
 import io.github.vyo.strakh.model.game.Resources
+import io.github.vyo.strakh.utility.Cost
 import io.github.vyo.twig.logger.Logger
 
 /**
@@ -15,7 +15,7 @@ import io.github.vyo.twig.logger.Logger
 class MineMinerals(val unit: Unit) : Action {
 
     override var agent: Agent = unit
-    override var cost: Cost = Cost(actions = 1)
+    override var cost: Cost = Cost(actions = 1, time = 100)
 
     val logger: Logger = Logger(this)
 

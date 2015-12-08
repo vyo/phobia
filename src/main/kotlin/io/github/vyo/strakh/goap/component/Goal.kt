@@ -14,4 +14,12 @@ interface Goal : Comparable<Goal> {
     override fun compareTo(other: Goal): Int {
         return value.compareTo(other.value)
     }
+
+    interface Atomic : Goal
+
+    interface Composite : Goal
+
+    interface Absolute : Goal
+
+    interface Relative : Goal
 }

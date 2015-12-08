@@ -1,9 +1,11 @@
 package io.github.vyo.strakh.goap.component
 
+import io.github.vyo.strakh.utility.Cost
+
 /**
  * Created by Manuel Weidmann on 28.11.2015.
  */
-data class Plan(val actions: Array<Action>,
+data class Plan(val actions: Array<Action> = arrayOf(),
                 var actualCost: Int = 0,
                 var actualSteps: Int = 0) {
     lateinit var cost: Cost

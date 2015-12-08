@@ -1,18 +1,20 @@
-package io.github.vyo.strakh.model.action
+package io.github.vyo.strakh.model.action.unit.worker
 
+import bwapi.UnitType
 import io.github.vyo.strakh.goap.component.Action
 import io.github.vyo.strakh.goap.component.Agent
-import io.github.vyo.strakh.goap.component.Cost
 import io.github.vyo.strakh.model.agent.Unit
+import io.github.vyo.strakh.utility.Cost
+import io.github.vyo.strakh.utility.extension.getCost
 
 /**
  * Created by Manuel Weidmann on 22.11.2015.
  */
 
-class Build(val unit: Unit) : Action {
+class Build(val unit: Unit, val unitType: UnitType) : Action {
 
     override var agent: Agent = unit
-    override var cost: Cost = Cost(actions = 1)
+    override var cost: Cost = unitType.getCost()
 
     override fun applicable(): Boolean {
         return false
@@ -29,6 +31,6 @@ class Build(val unit: Unit) : Action {
     }
 
     override fun toString(): String {
-        return "Build"
+        return "Build ${unitType.toString()}"
     }
 }

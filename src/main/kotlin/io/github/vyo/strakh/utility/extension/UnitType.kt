@@ -2,6 +2,8 @@ package io.github.vyo.strakh.utility.extension
 
 import bwapi.UnitType
 import io.github.vyo.strakh.utility.Cost
+import io.github.vyo.twig.logger.Level
+import io.github.vyo.twig.logger.Logger
 import java.util.*
 
 /**
@@ -255,12 +257,14 @@ private fun initialiseProductionMapping(): Map<UnitType, List<UnitType>> {
     unitTypes.map {
         val producer = it
         mapping.put(producer, unitTypes.filter {
-            it.whatBuilds().equals(producer)
+            it.whatBuilds().first.equals(producer)
         })
     }
-    //    for (producer in unitTypes.filter { it.isWorker or it.canProduce() }) {
-    //        mapping.put(producer, unitTypes.filter { it.whatBuilds().equals(producer) })
-    //    }
+    val logger: Logger = Logger("production mapping")
+    logger.level = Level.DEBUG
+    mapping.map {
+        logger.debug(it.key, Pair("produces", it.value))
+    }
 
     // return an immutable map
     return mapping.filter { true }.withDefault { listOf(UnitType.None) }

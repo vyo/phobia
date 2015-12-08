@@ -7,7 +7,13 @@ import bwapi.UnitType
  * Created by Manuel Weidmann on 23.11.2015.
  */
 
-object Resources : State() {
+object Resources : State {
+    override val mutable: Boolean = false
+
+    override fun getMutableCopy(): State {
+        throw UnsupportedOperationException()
+    }
+
     var minerals: MutableList<Unit> = arrayListOf()
     var geysers: MutableList<Unit> = arrayListOf()
     var refineries: MutableList<Unit> = arrayListOf()

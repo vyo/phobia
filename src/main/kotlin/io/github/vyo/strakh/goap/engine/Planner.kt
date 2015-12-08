@@ -25,7 +25,7 @@ object Planner {
 
         for (goal in goals) {
             var available: MutableList<Action> = actions
-            available.sort()
+            //            available.sort()
 
             val iterator: Iterator<Action> = available.iterator()
             while (iterator.hasNext()) {

@@ -1,64 +1,80 @@
 package io.github.vyo.strakh.model.agent
 
+import io.github.vyo.strakh.goap.component.Action
 import io.github.vyo.strakh.goap.component.Agent
+import io.github.vyo.strakh.goap.component.Goal
+import io.github.vyo.strakh.goap.component.Plan
 import io.github.vyo.strakh.model.game.State
+import io.github.vyo.strakh.model.game.World
+import io.github.vyo.strakh.utility.Cost
+import io.github.vyo.strakh.utility.extension.getCost
 
 /**
  * Created by Manuel Weidmann on 22.11.2015.
  */
 
-abstract class Unit(val unit: bwapi.Unit) : Agent, State() {
+open class Unit(val unit: bwapi.Unit,
+                override var actions: MutableList<Action> = arrayListOf(),
+                override var goals: MutableList<Goal> = arrayListOf(),
+                override var planState: State = World,
+                override var plan: Plan = Plan(),
+                override var mutable: Boolean = false,
+                var cost: Cost = unit.type.getCost(),
+                var position: bwapi.Position = bwapi.Position(-1, -1),
+                var isAccelerating: Boolean = false,
+                var isAttacking: Boolean = false,
+                var isBeingConstructed: Boolean = false,
+                var isBeingGathered: Boolean = false,
+                var isBeingHealed: Boolean = false,
+                var isBlind: Boolean = false,
+                var isBraking: Boolean = false,
+                var isBurrowed: Boolean = false,
+                var isCarryingGas: Boolean = false,
+                var isCarryingMinerals: Boolean = false,
+                var isCloaked: Boolean = false,
+                var isCompleted: Boolean = false,
+                var isConstructing: Boolean = false,
+                var isDefenseMatrixed: Boolean = false,
+                var isDetected: Boolean = false,
+                var isEnsnared: Boolean = false,
+                var isFollowing: Boolean = false,
+                var isGatheringGas: Boolean = false,
+                var isGatheringMinerals: Boolean = false,
+                var isHallucination: Boolean = false,
+                var isHoldingPosition: Boolean = false,
+                var isIdle: Boolean = false,
+                var isInterruptible: Boolean = false,
+                var isInvincible: Boolean = false,
+                var isIrradiated: Boolean = false,
+                var isLifted: Boolean = false,
+                var isLoaded: Boolean = false,
+                var isLockedDown: Boolean = false,
+                var isMaelstrommed: Boolean = false,
+                var isMorphing: Boolean = false,
+                var isMoving: Boolean = false,
+                var isParasited: Boolean = false,
+                var isPatrolling: Boolean = false,
+                var isPlagued: Boolean = false,
+                var isPowered: Boolean = false,
+                var isRepairing: Boolean = false,
+                var isResearching: Boolean = false,
+                var isSieged: Boolean = false,
+                var isStartingAttack: Boolean = false,
+                var isStasised: Boolean = false,
+                var isStimmed: Boolean = false,
+                var isStuck: Boolean = false,
+                var isTraining: Boolean = false,
+                var isUnderAttack: Boolean = false,
+                var isUnderDarkSwarm: Boolean = false,
+                var isUnderDisruptionWeb: Boolean = false,
+                var isUnderStorm: Boolean = false,
+                var isUpgrading: Boolean = false,
+                var isVisible: Boolean = false
+) : Agent, State {
 
-    var position: bwapi.Position = bwapi.Position(-1, -1)
-    var isAccelerating: Boolean = false
-    var isAttacking: Boolean = false
-    var isBeingConstructed: Boolean = false
-    var isBeingGathered: Boolean = false
-    var isBeingHealed: Boolean = false
-    var isBlind: Boolean = false
-    var isBraking: Boolean = false
-    var isBurrowed: Boolean = false
-    var isCarryingGas: Boolean = false
-    var isCarryingMinerals: Boolean = false
-    var isCloaked: Boolean = false
-    var isCompleted: Boolean = false
-    var isConstructing: Boolean = false
-    var isDefenseMatrixed: Boolean = false
-    var isDetected: Boolean = false
-    var isEnsnared: Boolean = false
-    var isFollowing: Boolean = false
-    var isGatheringGas: Boolean = false
-    var isGatheringMinerals: Boolean = false
-    var isHallucination: Boolean = false
-    var isHoldingPosition: Boolean = false
-    var isIdle: Boolean = false
-    var isInterruptible: Boolean = false
-    var isInvincible: Boolean = false
-    var isIrradiated: Boolean = false
-    var isLifted: Boolean = false
-    var isLoaded: Boolean = false
-    var isLockedDown: Boolean = false
-    var isMaelstrommed: Boolean = false
-    var isMorphing: Boolean = false
-    var isMoving: Boolean = false
-    var isParasited: Boolean = false
-    var isPatrolling: Boolean = false
-    var isPlagued: Boolean = false
-    var isPowered: Boolean = false
-    var isRepairing: Boolean = false
-    var isResearching: Boolean = false
-    var isSieged: Boolean = false
-    var isStartingAttack: Boolean = false
-    var isStasised: Boolean = false
-    var isStimmed: Boolean = false
-    var isStuck: Boolean = false
-    var isTraining: Boolean = false
-    var isUnderAttack: Boolean = false
-    var isUnderDarkSwarm: Boolean = false
-    var isUnderDisruptionWeb: Boolean = false
-    var isUnderStorm: Boolean = false
-    var isUpgrading: Boolean = false
-    var isVisible: Boolean = false
+    init {
+        update()
+    }
 
     override fun update() {
         position = unit.position
@@ -111,5 +127,9 @@ abstract class Unit(val unit: bwapi.Unit) : Agent, State() {
         isUnderStorm = unit.isUnderStorm
         isUpgrading = unit.isUpgrading
         isVisible = unit.isVisible
+    }
+
+    override fun getMutableCopy(): State {
+        return Unit(unit = unit, actions = actions, goals = goals, planState = planState, plan = plan, mutable = true)
     }
 }
