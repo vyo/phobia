@@ -103,16 +103,6 @@ object Strakh : BWEventListener {
                     Planner.formulatePlan(Worker(myUnit))
                 }.get()
 
-                //                async {
-                //                    Planner.formulatePlan(Worker(myUnit))
-                //                } then {
-                //                    Executor.executePlan(it)
-                //                }
-
-                //                async {
-                //                    val plan = Planner.formulatePlan(Worker(myUnit))
-                //                    Executor.executePlan(plan)
-                //                }
             }
 
             //if there's enough minerals, train an SCV
