@@ -20,7 +20,7 @@ data class Cost(var health: Int = 0,
         return time.compareTo(other.time)
     }
 
-    fun plus(cost: Cost): Cost {
+    operator fun plus(cost: Cost): Cost {
         return Cost(health = health + cost.health,
                 shield = shield + cost.shield,
                 energy = energy + cost.energy,
