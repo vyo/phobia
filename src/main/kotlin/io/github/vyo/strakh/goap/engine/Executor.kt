@@ -1,6 +1,7 @@
 package io.github.vyo.strakh.goap.engine
 
 import io.github.vyo.strakh.goap.component.Action
+import io.github.vyo.strakh.goap.component.NotExecutedException
 import io.github.vyo.strakh.goap.component.Plan
 import io.github.vyo.twig.logger.Logger
 
@@ -14,6 +15,7 @@ object Executor {
     private val priorityQueue: PriorityQueue = PriorityQueue(arrayListOf())
 
     fun processQueue() {
+        logger.debug("processing plan queue")
         for (element in priorityQueue) {
             if (element.priority == 0) {
                 processQueueElement(element)
@@ -36,8 +38,13 @@ object Executor {
             return
         }
 
-        logger.trace("Executing action")
-        action.execute()
+        try {
+            logger.trace("Executing action")
+            action.execute()
+        } catch (e: NotExecutedException) {
+            logger.error(e.message!!)
+            return
+        }
 
         element.executionIndex++
         element.priority = action.cost.time
