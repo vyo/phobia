@@ -10,10 +10,6 @@ import bwapi.UnitType
 object Resources : State {
     override val mutable: Boolean = false
 
-    override fun getMutableCopy(): State {
-        throw UnsupportedOperationException()
-    }
-
     var minerals: MutableList<Unit> = arrayListOf()
     var geysers: MutableList<Unit> = arrayListOf()
     var refineries: MutableList<Unit> = arrayListOf()
@@ -88,5 +84,10 @@ object Resources : State {
                 refineries.add(refinery)
             }
         }
+    }
+
+    //TODO: return a proper mutable copy
+    override fun getMutableCopy(): State {
+        return this
     }
 }

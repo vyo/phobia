@@ -9,10 +9,6 @@ import bwapi.Unit
 object Units : State {
     override val mutable: Boolean = false
 
-    override fun getMutableCopy(): State {
-        throw UnsupportedOperationException()
-    }
-
     var own: MutableList<Unit> = arrayListOf()
     var enemy: MutableList<Unit> = arrayListOf()
     var neutral: MutableList<Unit> = arrayListOf()
@@ -24,5 +20,10 @@ object Units : State {
 
         //update neutral units
         neutral = Meta.game.neutralUnits
+    }
+
+    //TODO: return a proper mutable copy
+    override fun getMutableCopy(): State {
+        return this
     }
 }

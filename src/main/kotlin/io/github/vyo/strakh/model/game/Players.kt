@@ -9,13 +9,14 @@ import bwapi.Player
 object Players : State {
     override val mutable: Boolean = false
 
-    override fun getMutableCopy(): State {
-        throw UnsupportedOperationException()
-    }
-
     lateinit var self: Player
     lateinit var enemies: MutableList<Player>
 
     override fun update() {
+    }
+
+    //TODO: return a proper mutable copy
+    override fun getMutableCopy(): State {
+        return this
     }
 }

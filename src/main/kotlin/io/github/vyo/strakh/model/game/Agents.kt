@@ -7,10 +7,11 @@ package io.github.vyo.strakh.model.game
 object Agents : State {
     override val mutable: Boolean = false
 
-    override fun getMutableCopy(): State {
-        throw UnsupportedOperationException()
+    override fun update() {
     }
 
-    override fun update() {
+    //TODO: return a proper mutable copy
+    override fun getMutableCopy(): State {
+        return this
     }
 }
