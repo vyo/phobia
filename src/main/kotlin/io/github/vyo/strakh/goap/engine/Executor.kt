@@ -65,19 +65,28 @@ object Executor {
         return "executor"
     }
 
-    class PriorityQueue(var list: MutableList<PriorityQueue.Element>) : MutableList<PriorityQueue.Element> by list {
+    class PriorityQueue(var list: MutableList<PriorityQueue.Element> = arrayListOf()) : MutableList<PriorityQueue.Element> by
+    list {
 
         data class Element(var priority: Int = 0, var plan: Plan, var executionIndex: Int = 0)
 
         override fun add(element: Element): Boolean {
             var lowerBound: Int = 0
-            var upperBound: Int = priorityQueue.size - 1
+            var upperBound: Int = list.size
 
             while (lowerBound != upperBound) {
-                if (element.priority < upperBound / 2) {
-                    upperBound /= 2
+                //check if we are out of bounds
+                if (element.priority <= list[lowerBound].priority) break
+                if (element.priority >= list[upperBound - 1].priority) {
+                    lowerBound = upperBound
+                    break
+                }
+
+                //perform a binary search for our spot in the queue
+                if (element.priority < list[( lowerBound + upperBound ) / 2].priority) {
+                    upperBound = ( lowerBound + upperBound ) / 2
                 } else {
-                    lowerBound = upperBound / 2
+                    lowerBound = ( lowerBound + upperBound ) / 2
                 }
             }
 
