@@ -118,65 +118,65 @@ object Strakh : BWEventListener {
     }
 
     override fun onUnitHide(unit: Unit?) {
-        gameInfoLogger.debug("event callback for onUnitHide not implemented")
+        gameInfoLogger.trace("event callback for onUnitHide not implemented")
     }
 
     override fun onUnitComplete(unit: Unit?) {
-        gameInfoLogger.debug("event callback for onUnitComplete not implemented")
+        gameInfoLogger.trace("event callback for onUnitComplete not implemented")
     }
 
     override fun onSendText(text: String) {
-        gameInfoLogger.debug("event callback for onSendText not implemented")
+        gameInfoLogger.trace("event callback for onSendText not implemented")
     }
 
     override fun onNukeDetect(target: Position?) {
-        gameInfoLogger.debug("event callback for onNukeDetect not " +
+        gameInfoLogger.trace("event callback for onNukeDetect not " +
                 "implemented")
     }
 
     override fun onPlayerDropped(player: Player?) {
-        gameInfoLogger.debug("event callback for onPlayerDropped not implemented")
+        gameInfoLogger.trace("event callback for onPlayerDropped not implemented")
     }
 
     override fun onUnitEvade(unit: Unit?) {
-        gameInfoLogger.debug("event callback for onUnitEvade not implemented")
+        gameInfoLogger.trace("event callback for onUnitEvade not implemented")
 
     }
 
     override fun onEnd(end: Boolean) {
-        gameInfoLogger.debug("event callback for onEnd not implemented")
+        gameInfoLogger.trace("event callback for onEnd not implemented")
     }
 
     override fun onUnitMorph(unit: Unit?) {
-        gameInfoLogger.debug("event callback for onUnitMorph not implemented")
+        gameInfoLogger.trace("event callback for onUnitMorph not implemented")
     }
 
     override fun onUnitRenegade(unit: Unit?) {
-        gameInfoLogger.debug("event callback for onUnitRenegade not implemented")
+        gameInfoLogger.trace("event callback for onUnitRenegade not implemented")
     }
 
     override fun onUnitDiscover(unit: Unit?) {
-        gameInfoLogger.debug("event callback for onUnitDiscover not implemented")
+        gameInfoLogger.trace("event callback for onUnitDiscover not implemented")
     }
 
     override fun onPlayerLeft(player: Player?) {
-        gameInfoLogger.debug("event callback for onPlayerLeft not implemented")
+        gameInfoLogger.trace("event callback for onPlayerLeft not implemented")
     }
 
     override fun onReceiveText(receiver: Player?, text: String?) {
-        gameInfoLogger.debug("event callback for onReceiveText not implemented")
+        gameInfoLogger.trace("event callback for onReceiveText not implemented")
     }
 
     override fun onUnitShow(unit: Unit?) {
-        gameInfoLogger.debug("event callback for onUnitShow not implemented")
+        gameInfoLogger.trace("event callback for onUnitShow not implemented")
     }
 
     override fun onSaveGame(save: String?) {
-        gameInfoLogger.debug("event callback for onSaveGame not implemented")
+        gameInfoLogger.trace("event callback for onSaveGame not implemented")
     }
 
     override fun onUnitDestroy(unit: Unit?) {
-        gameInfoLogger.debug("event callback for onUnitDestroy not implemented")
+        gameInfoLogger.trace("event callback for onUnitDestroy not implemented")
     }
 
     fun start() {
